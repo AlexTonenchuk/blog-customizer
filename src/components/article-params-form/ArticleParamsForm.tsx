@@ -8,6 +8,7 @@ import { Text } from 'src/ui/text';
 import { Separator } from 'src/ui/separator';
 import {
 	ArticleStateType,
+	OptionType,
 	fontFamilyOptions,
 	fontSizeOptions,
 	fontColors,
@@ -62,6 +63,15 @@ export const ArticleParamsForm = ({
 		setArticleState(defaultArticleState);
 	};
 
+	const updateFormField = (field: keyof ArticleStateType) => {
+		return (value: OptionType) => {
+			setFormState((prev: ArticleStateType) => ({
+				...prev,
+				[field]: value,
+			}));
+		};
+	};
+
 	return (
 		<>
 			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
@@ -80,9 +90,7 @@ export const ArticleParamsForm = ({
 					<Select
 						selected={formState.fontFamilyOption}
 						options={fontFamilyOptions}
-						onChange={(val) =>
-							setFormState({ ...formState, fontFamilyOption: val })
-						}
+						onChange={updateFormField('fontFamilyOption')}
 						title='Шрифт'
 					/>
 
@@ -91,9 +99,7 @@ export const ArticleParamsForm = ({
 						name='fontSize'
 						options={fontSizeOptions}
 						selected={formState.fontSizeOption}
-						onChange={(val) =>
-							setFormState({ ...formState, fontSizeOption: val })
-						}
+						onChange={updateFormField('fontSizeOption')}
 						title='Размер шрифта'
 					/>
 
@@ -101,7 +107,7 @@ export const ArticleParamsForm = ({
 					<Select
 						selected={formState.fontColor}
 						options={fontColors}
-						onChange={(val) => setFormState({ ...formState, fontColor: val })}
+						onChange={updateFormField('fontColor')}
 						title='Цвет шрифта'
 					/>
 
@@ -111,9 +117,7 @@ export const ArticleParamsForm = ({
 					<Select
 						selected={formState.backgroundColor}
 						options={backgroundColors}
-						onChange={(val) =>
-							setFormState({ ...formState, backgroundColor: val })
-						}
+						onChange={updateFormField('backgroundColor')}
 						title='Цвет фона'
 					/>
 
@@ -121,9 +125,7 @@ export const ArticleParamsForm = ({
 					<Select
 						selected={formState.contentWidth}
 						options={contentWidthArr}
-						onChange={(val) =>
-							setFormState({ ...formState, contentWidth: val })
-						}
+						onChange={updateFormField('contentWidth')}
 						title='Ширина контента'
 					/>
 
